@@ -11,14 +11,17 @@ block content
       table.table.table-sm
         thead
           tr
-            th id
+            th(style="display:none") id
+            th
             th Property
             th Value
             th Select
         tbody
           each property in result
             tr
-              td= property.id
+              td(style="display:none")= property.id
+              td
+                i(class=property.GearTemplate.icon)
               td= property.GearTemplate.property 
               td= property.value 
               td

@@ -116,7 +116,17 @@ module.exports = {
             autocomplete: false,
             createdAt: new Date(),
             updatedAt: new Date()
-        }], {});
+        }, {
+            id: uuidv4(),
+            category: 'Field Recorder',
+            property: 'Number of Channels
+            field: 'nchannels',
+            icon: 'fas fa-list-ol',
+            mandatory: false,
+            autocomplete: false,
+            createdAt: new Date(),
+            updatedAt: new Date()
+}], {});
     },
     down: (queryInterface, Sequelize) => {
         return queryInterface.bulkDelete('GearTemplates', null, {});
