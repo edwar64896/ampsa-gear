@@ -71,6 +71,15 @@ module.exports = {
             updatedAt: new Date()
         }, {
             id: uuidv4(),
+            category: 'Wireless Receiver',
+            property: 'Frequency Block',
+            field: 'fblock',
+            mandatory: false,
+            autocomplete: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }, {
+            id: uuidv4(),
             category: 'Wireless Transmitter',
             property: 'Frequency Block',
             field: 'fblock',
