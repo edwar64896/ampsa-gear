@@ -12,6 +12,10 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false
       },
+      field_id: {
+        type: Sequelize.UUID,
+        allowNull: false
+      },
       name: {
         type: Sequelize.STRING,
         allowNull:false

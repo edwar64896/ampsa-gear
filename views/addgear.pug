@@ -1,5 +1,9 @@
 extends layout
 
+block navbarcontext
+  li.nav-item.active
+    a.nav-link(href="/user") Gear List
+    
 
 block content
   link(rel="stylesheet",       href="/stylesheets/tempusdominus-bootstrap-4.min.css")
@@ -14,7 +18,7 @@ block content
   form(action="addgear", method="post")
     div.container-fluid
       div.row
-        div.col-sm-12
+        div.col-sm-6
           div.form-group
             label(for="acqdate" placeholder="purchase date") Purchase Date:
             div.input-group.date#acqdate(data-target-input="nearest")
@@ -31,6 +35,7 @@ block content
   script.
     $(document).ready(function() {
       $(function() {
+
        /* set up the datetimepicker /*
        $('#acqdate').datetimepicker({format:'L',useCurrent:true});
 
@@ -38,6 +43,7 @@ block content
        $('<div class="form-group">').load('/user/api/template/*', function () {
          $('#addgearform').append($(this).html());
          //$('#addgearform').append('<div id="catfields"></div>');
+
           /* we are going to have a category field by now.*/
           $('#category').on('change',function() {
             console.log ($(this).val());

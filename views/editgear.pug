@@ -1,0 +1,27 @@
+extends layout
+
+block navbarcontext
+  li.nav-item.active
+    a.nav-link(href="/user") Gear List
+    
+
+block content
+  div.container-fluid
+    div.row
+      table.table.table-sm
+        thead
+          tr
+            th id
+            th Property
+            th Value
+            th Select
+        tbody
+          each property in result
+            tr
+              td= property.id
+              td= property.GearTemplate.property 
+              td= property.value 
+              td
+                button.btn.btn-sm update
+                  
+  

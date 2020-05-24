@@ -7,11 +7,11 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false
       },
-      category: {
+      field: {
         type: Sequelize.STRING,
         allowNull:false
       },
-      name: {
+      option: {
         type: Sequelize.STRING,
         allowNull:false
       },

@@ -9,22 +9,22 @@ var {
 
 /* GET users listing. */
 
-router.get('/:category', function(req, res, next) {
+router.get('/:field', function(req, res, next) {
         models.Option.findAll({
           where: {
-            category: {
-              [Op.like]:req.params.category
+            field: {
+              [Op.like]:req.params.field
             },
-            name: {
+            option: {
               [Op.like]:'%'+req.query.query+'%'
             }
           },
-          attributes: ['id','name']
+          attributes: ['id','option']
         })
         .map((result) => {
             return {
                 data: result.id,
-                value: result.name
+                value: result.option
             };
         })
         .then((result) => {

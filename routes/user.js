@@ -67,18 +67,23 @@ router.get('/api/template/:category', function(req,res,next) {
         category: req.params.category
       },
       attributes: [
-        'property','field','autocomplete','mandatory'
+        'property','field','icon','autocomplete','mandatory'
       ]
     }).then( 
       (fields) => {
         var ht='';
         fields.forEach((field) => {
-          ht = ht + pug.renderFile('./views/agfield.pug',{ 
-            iffield:field.field,
-            ifname:field.property,
-            ifmandatory:field.mandatory,
-            ifautocomplete:field.autocomplete 
-          });
+          /* skipping acqdate as we are handling this manually
+          in the view page so we can add a datepicker */
+          if (field.field != 'acqdate') {
+            ht = ht + pug.renderFile('./views/agfield.pug',{ 
+              iffield:field.field,
+              ifname:field.property,
+              ificon:field.icon,
+              ifmandatory:field.mandatory,
+              ifautocomplete:field.autocomplete 
+            });
+          }
         });
         res.send(ht);
       }
@@ -106,6 +111,7 @@ router.get('/api/gear',function(req,res,next) {
       }).then( (results) => {
         var newresults=results.map( (result,index,array) => {
           result.dataValues.GearPropertiesHash=result.GearProperties.toHashMap('name');
+          result.dataValues.dummy='';
           return result;
         });
         res.json( {data: newresults} );
@@ -114,7 +120,6 @@ router.get('/api/gear',function(req,res,next) {
       }).finally( () => {
         console.log('in finally');
       });
-    
   } else {
     res.json({});
   }
@@ -139,13 +144,11 @@ router.get('/', function(req, res, next) {
            newresults.push(result);
         });
         res.render('usergear');
-        //res.render('usergear',{data: newresults});
       }).catch ( (error) => {
         console.log(error);
+        res.redirect('/');
       }).finally( () => {
-        //res.redirect('/');
       });
-
     } else {
         res.redirect('/');
     }
@@ -213,6 +216,7 @@ router.post('/addgear', function(req, res, next) {
                     {
                       id: uuidv4(),
                       gear_id: gear.id,
+                      field_id: category.id,
                       name:category.field,
                       value:req.body[category.field],
                       createdAt: new Date(),
@@ -229,75 +233,35 @@ router.post('/addgear', function(req, res, next) {
                 });
               });
             });
-            res.redirect('/user');
     } else {
         res.redirect('/')
     }
 });
 
+router.get('/edit/:id', function(req,res,next) {
+  if (req.isAuthenticated()){
+    if (req.params.id) {
+      models.GearProperty.findAll({
+        where: {
+          gear_id:req.params.id,
+        },
+        include: [
+          {model: models.GearTemplate}
+        ]
+      }).then( (result) => {
+        //result.GearPropertiesHash=result.GearProperties.toHashMap('name');
+        console.log(result);
+        res.render('editgear',{result:result});
+      }).catch ( (error) => {
+        console.log(error);
+      }).finally( () => {
+        //res.redirect('/');
+      });
+    } else {
+      res.redirect('/user');
+    }
+  } else {
+    res.redirect('/');
+  }
+});
 module.exports = router;
-
-              /*
-              models.GearProperty.bulkCreate([{
-                id: uuidv4(),
-                gear_id: gear.id,
-                name:'manufacturer',
-                value:req.body.manufacturer,
-                createdAt: new Date(),
-                updatedAt: new Date()
-              },{
-                id: uuidv4(),
-                gear_id: gear.id,
-                name:'category',
-                value:req.body.category,
-                createdAt: new Date(),
-                updatedAt: new Date()
-              },{
-                id: uuidv4(),
-                gear_id: gear.id,
-                name:'model',
-                value:req.body.model,
-                createdAt: new Date(),
-                updatedAt: new Date()
-              },{
-                id: uuidv4(),
-                gear_id: gear.id,
-                name:'serial',
-                value:req.body.serial,
-                createdAt: new Date(),
-                updatedAt: new Date()
-              },{
-                id: uuidv4(),
-                gear_id: gear.id,
-                name:'rvalue',
-                value:req.body.rvalue,
-                createdAt: new Date(),
-                updatedAt: new Date()
-              },{
-                id: uuidv4(),
-                gear_id: gear.id,
-                name:'pvalue',
-                value:req.body.pvalue,
-                createdAt: new Date(),
-                updatedAt: new Date()
-              },{
-                id: uuidv4(),
-                gear_id: gear.id,
-                name:'acqdate',
-                value:req.body.acqdate,
-                createdAt: new Date(),
-                updatedAt: new Date()
-              }]).then( () => {
-                res.redirect('/user');
-              }).catch( (error) => {
-                console.log(error);
-                req.flash('info','Add action cancelled');
-                res.redirect('/user');
-              });
-            })
-            .catch ( (error) => {
-              console.log(error);
-              req.flash('error',error);
-              res.redirect('/user',{formdata:req.body});
-            });
-            */

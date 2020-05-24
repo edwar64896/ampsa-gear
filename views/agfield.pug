@@ -1,10 +1,11 @@
-mixin agfield(fname,ffield,fmandatory=0,ac=0)
+mixin agfield(fname,ffield,ficon,fmandatory=0,ac=0)
   div.form-group
     label(for=ffield)= fname
       div.input-group
         input.form-control(id=ffield,type="text",name=ffield)
         div.input-group-append
           div.input-group-text
+            i(class=ficon)
   if (ac==1)
     - var acid="#"+ffield;
     - var acparm="/autocomplete/"+ffield;
@@ -14,5 +15,4 @@ mixin agfield(fname,ffield,fmandatory=0,ac=0)
         deferRequestBy: 300
       });
 
-+agfield(ifname,iffield,ifmandatory,ifautocomplete)
-
++agfield(ifname,iffield,ificon,ifmandatory,ifautocomplete)

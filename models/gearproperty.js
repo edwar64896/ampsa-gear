@@ -8,9 +8,15 @@ module.exports = (sequelize, DataTypes) => {
           model: 'Gear',
           key: 'id'
         },
+        field_id: {
+          type: DataTypes.UUID,
+          allowNull:false,
+            model: 'GearTemplate',
+            key: 'id'
+        },
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         value: {
             type: DataTypes.STRING,
@@ -19,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
     GearProperty.associate = function(models) {
       GearProperty.belongsTo(models.Gear,{foreignKey: 'gear_id'});
+      GearProperty.belongsTo(models.GearTemplate,{foreignKey: 'field_id',targetKey: 'id'});
     };
     return GearProperty;
 };

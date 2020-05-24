@@ -19,6 +19,10 @@ module.exports = {
         allowNull:false,
         type: Sequelize.STRING
       },
+      icon: {
+        allowNull:false,
+        type: Sequelize.STRING
+      },
       mandatory: {
         allowNull:false,
         type: Sequelize.BOOLEAN
