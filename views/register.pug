@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  div.container-fluid.border-primary.mt-5
+    div.row
+      div.card.w-50.mx-auto
+        div.card-body
+          form(action="/register", method="post")
+            div.form-group
+              label(for='uname') Username:
+              input.form-control#uname(type="text",name="username")
+            div.form-group
+              label(for='fname') First Name:
+              input.form-control#fname(type="text",name="firstName")
+            div.form-group
+              label(for='lname') Last Name:
+              input.form-control#lname(type="text",name="lastName")
+            div.form-group
+              label(for='email') EMail Address:
+              input.form-control#email(type="text",name="email")
+            div.form-group
+              input.form-control(type="submit", value="Register")

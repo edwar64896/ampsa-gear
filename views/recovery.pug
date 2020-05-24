@@ -1,0 +1,23 @@
+extends layout
+
+block content
+
+  h1= title
+  p Welcome to password recovery page
+
+  form(action="/recovery", method="post")
+    table
+      tr
+        td
+          label(for='npword1') New Password:
+        td
+          input#npword1(type="password",name="npword1")
+      tr
+        td
+          label(for='npword2') Password confirmation:
+        td
+          input#npword2(type="password",name="npword2")
+      tr
+        td(colspan=2)
+          input(type="hidden", name="recTok" value=recoveryToken)
+          input(type="submit", value="Change Password")

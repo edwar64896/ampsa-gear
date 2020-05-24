@@ -1,0 +1,17 @@
+extends layout
+
+block content
+
+  h1 Password Recovery
+
+  form(action="/recover", method="post")
+    table
+      tr
+        td(align='right')
+          label(for='email') Email:
+        td
+          input#email(type="text",name="email")
+      tr
+        td(colspan=2)
+          input(type="submit", value="Recover")
+    

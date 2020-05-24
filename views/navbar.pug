@@ -1,0 +1,23 @@
+//
+// NAVBAR template
+//
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  a.navbar-brand(href='#') ASPi GearTrack
+  button.navbar-toggler(type="button",data-toggle="collapse",data-target="#navbarSupportedContent",aria-controls="navbarSupportedContent",aria-expanded="false",aria-label="Toggle navigation")
+    span.navbar-toggler-icon
+  div.collapse.navbar-collapse#navbarSupportedContent
+    ul.navbar-nav.mr-auto
+      block navbarcontext
+    ul.navbar-nav
+      if isAuthenticated
+        li.nav-item.active
+          a.nav-link(href="#") ProfileTodo
+        li.nav-item.active
+          a.nav-link(href="/logout") Logout
+      else
+        li.nav-item.active
+          a.nav-link(href="/register") Sign Up
+        li.nav-item.active
+          a.nav-link(href="/login") Login
+
+

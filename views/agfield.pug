@@ -1,0 +1,18 @@
+mixin agfield(fname,ffield,fmandatory=0,ac=0)
+  div.form-group
+    label(for=ffield)= fname
+      div.input-group
+        input.form-control(id=ffield,type="text",name=ffield)
+        div.input-group-append
+          div.input-group-text
+  if (ac==1)
+    - var acid="#"+ffield;
+    - var acparm="/autocomplete/"+ffield;
+    script.
+      $('#{acid}').autocomplete({
+        serviceUrl: '#{acparm}',
+        deferRequestBy: 300
+      });
+
++agfield(ifname,iffield,ifmandatory,ifautocomplete)
+

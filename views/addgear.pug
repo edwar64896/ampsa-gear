@@ -1,0 +1,49 @@
+extends layout
+
+
+block content
+  link(rel="stylesheet",       href="/stylesheets/tempusdominus-bootstrap-4.min.css")
+  script(type="text/javascript",src="/javascripts/tempusdominus-bootstrap-4.min.js")
+  style(type='text/css').
+    .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+    .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+    .autocomplete-selected { background: #F0F0F0; }
+    .autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+    .autocomplete-group { padding: 2px 5px; }
+    .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+  form(action="addgear", method="post")
+    div.container-fluid
+      div.row
+        div.col-sm-12
+          div.form-group
+            label(for="acqdate" placeholder="purchase date") Purchase Date:
+            div.input-group.date#acqdate(data-target-input="nearest")
+              input.form-control.datetimepicker-input(type="text",name="acqdate",data-target="#acqdate")
+              div.input-group-append(data-target="#acqdate",data-toggle="datetimepicker")
+                div.input-group-text
+                  i.fa.fa-calendar
+      div.row
+        div.col-sm-6#addgearform
+        div.col-sm-6#catfields
+      div.row
+        div.col-sm-12
+          button.btn.btn-primary(type='submit') Add Gear
+  script.
+    $(document).ready(function() {
+      $(function() {
+       /* set up the datetimepicker /*
+       $('#acqdate').datetimepicker({format:'L',useCurrent:true});
+
+       /* load in the pre-rendered fields from the REST api */
+       $('<div class="form-group">').load('/user/api/template/*', function () {
+         $('#addgearform').append($(this).html());
+         //$('#addgearform').append('<div id="catfields"></div>');
+          /* we are going to have a category field by now.*/
+          $('#category').on('change',function() {
+            console.log ($(this).val());
+            $('#catfields').load(encodeURI('/user/api/template/'+$(this).val()));
+          });
+       });
+
+      });
+    });
